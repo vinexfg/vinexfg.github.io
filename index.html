@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Vinicius Almeida — Full Stack Developer</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#F7F6F3;
+  --surface:#FFFFFF;
+  --border:#E8E6E0;
+  --text:#1A1916;
+  --muted:#7A7870;
+  --accent:#1A6B4A;
+  --accent-light:#E8F4EF;
+  --mono:#2D5A8E;
+  --tag-bg:#F0EDE8;
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.6}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(247,246,243,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 2rem}
+.nav-inner{max-width:1000px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:56px}
+.nav-logo{font-family:'DM Mono',monospace;font-size:14px;color:var(--accent);text-decoration:none;letter-spacing:0.02em}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{font-size:14px;color:var(--muted);text-decoration:none;transition:color 0.2s}
+.nav-links a:hover{color:var(--text)}
+
+/* LAYOUT */
+main{max-width:1000px;margin:0 auto;padding:0 2rem}
+section{padding:5rem 0;border-bottom:1px solid var(--border)}
+section:last-child{border-bottom:none}
+
+/* HERO */
+#hero{padding:9rem 0 5rem;display:grid;grid-template-columns:1fr auto;gap:3rem;align-items:center}
+.hero-tag{font-family:'DM Mono',monospace;font-size:12px;color:var(--accent);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:1rem;opacity:0;animation:fadeUp 0.6s ease 0.1s forwards}
+.hero-name{font-size:clamp(2.2rem,5vw,3.4rem);font-weight:300;line-height:1.15;letter-spacing:-0.02em;margin-bottom:1.2rem;opacity:0;animation:fadeUp 0.6s ease 0.2s forwards}
+.hero-name strong{font-weight:500}
+.hero-desc{font-size:17px;color:var(--muted);max-width:480px;line-height:1.7;margin-bottom:2rem;opacity:0;animation:fadeUp 0.6s ease 0.3s forwards}
+.hero-ctas{display:flex;gap:12px;opacity:0;animation:fadeUp 0.6s ease 0.4s forwards}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 22px;border-radius:6px;font-size:14px;font-weight:500;text-decoration:none;transition:all 0.2s;cursor:pointer;border:none;font-family:inherit}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-primary:hover{background:#145a3d;transform:translateY(-1px)}
+.btn-outline{background:transparent;color:var(--text);border:1px solid var(--border)}
+.btn-outline:hover{border-color:var(--accent);color:var(--accent)}
+.hero-visual{opacity:0;animation:fadeUp 0.6s ease 0.3s forwards}
+.avatar-ring{width:180px;height:180px;border-radius:50%;background:var(--accent-light);border:2px solid var(--border);display:flex;align-items:center;justify-content:center;position:relative}
+.avatar-initials{font-size:52px;font-weight:300;color:var(--accent);font-family:'DM Mono',monospace}
+.status-dot{position:absolute;bottom:12px;right:12px;width:14px;height:14px;background:#22c55e;border-radius:50%;border:2px solid var(--bg)}
+
+/* SECTION HEADER */
+.sec-label{font-family:'DM Mono',monospace;font-size:11px;color:var(--accent);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.5rem}
+.sec-title{font-size:clamp(1.4rem,3vw,2rem);font-weight:400;letter-spacing:-0.01em;margin-bottom:3rem}
+
+/* SKILLS */
+.skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+.skill-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.5rem;transition:border-color 0.2s,transform 0.2s}
+.skill-card:hover{border-color:var(--accent);transform:translateY(-2px)}
+.skill-icon{width:40px;height:40px;border-radius:8px;background:var(--accent-light);display:flex;align-items:center;justify-content:center;margin-bottom:1rem;font-size:18px}
+.skill-name{font-weight:500;font-size:15px;margin-bottom:4px}
+.skill-desc{font-size:13px;color:var(--muted);line-height:1.5;margin-bottom:1rem}
+.skill-bar-wrap{height:4px;background:var(--tag-bg);border-radius:2px;overflow:hidden}
+.skill-bar{height:100%;background:var(--accent);border-radius:2px;width:0;transition:width 1.2s cubic-bezier(.4,0,.2,1)}
+.skill-level{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);margin-top:6px}
+
+/* PROJECTS */
+.projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+.project-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.5rem;transition:border-color 0.2s}
+.project-card:hover{border-color:var(--accent)}
+.project-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:0.75rem}
+.project-name{font-weight:500;font-size:15px}
+.project-link{font-size:12px;color:var(--accent);text-decoration:none;font-family:'DM Mono',monospace}
+.project-link:hover{text-decoration:underline}
+.project-desc{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:1rem}
+.project-tags{display:flex;gap:6px;flex-wrap:wrap}
+.tag{font-family:'DM Mono',monospace;font-size:11px;background:var(--tag-bg);color:var(--mono);padding:3px 10px;border-radius:4px}
+
+/* ABOUT */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start}
+.about-text p{color:var(--muted);line-height:1.8;margin-bottom:1rem;font-size:15px}
+.about-stats{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.stat-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.25rem;text-align:center}
+.stat-num{font-size:2rem;font-weight:300;color:var(--accent);font-family:'DM Mono',monospace;display:block}
+.stat-lbl{font-size:12px;color:var(--muted);margin-top:4px}
+
+/* CONTACT */
+.contact-wrap{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start}
+.contact-info p{color:var(--muted);font-size:15px;line-height:1.8;margin-bottom:1.5rem}
+.contact-links{display:flex;flex-direction:column;gap:12px}
+.contact-link{display:flex;align-items:center;gap:12px;padding:12px 16px;background:var(--surface);border:1px solid var(--border);border-radius:8px;text-decoration:none;color:var(--text);font-size:14px;transition:border-color 0.2s}
+.contact-link:hover{border-color:var(--accent);color:var(--accent)}
+.contact-link span{font-family:'DM Mono',monospace;font-size:12px;color:var(--muted);margin-left:auto}
+.contact-form{display:flex;flex-direction:column;gap:12px}
+.contact-form input,.contact-form textarea{width:100%;padding:12px 14px;border:1px solid var(--border);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:14px;background:var(--surface);color:var(--text);transition:border-color 0.2s;resize:none}
+.contact-form input:focus,.contact-form textarea:focus{outline:none;border-color:var(--accent)}
+.contact-form textarea{height:120px}
+
+/* FOOTER */
+footer{padding:2rem;text-align:center;font-size:13px;color:var(--muted);font-family:'DM Mono',monospace}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+
+@media(max-width:680px){
+  #hero{grid-template-columns:1fr;text-align:center}
+  .hero-visual{display:none}
+  .hero-ctas{justify-content:center}
+  .about-grid,.contact-wrap{grid-template-columns:1fr}
+  .nav-links{display:none}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="#">vinexfg</a>
+    <ul class="nav-links">
+      <li><a href="#projects">Projetos</a></li>
+      <li><a href="#skills">Habilidades</a></li>
+      <li><a href="#about">Sobre</a></li>
+      <li><a href="#contact">Contato</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div>
+      <p class="hero-tag">Disponível para oportunidades</p>
+      <h1 class="hero-name">Vinicius<br><strong>Silva Almeida</strong></h1>
+      <p class="hero-desc">Desenvolvedor Full Stack com foco em Python, React e dados. Construo aplicações completas — do banco de dados à interface — com código limpo e bem estruturado.</p>
+      <div class="hero-ctas">
+        <a href="#contact" class="btn btn-primary">Entre em contato</a>
+        <a href="#projects" class="btn btn-outline">Ver projetos</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="avatar-ring">
+        <span class="avatar-initials">VA</span>
+        <div class="status-dot" title="Disponível"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <p class="sec-label">Portfólio</p>
+    <h2 class="sec-title">Projetos no GitHub</h2>
+    <div class="projects-grid">
+      <div class="project-card">
+        <div class="project-header">
+          <p class="project-name">StreamManager Pro</p>
+          <a class="project-link" href="https://github.com/vinexfg" target="_blank">↗ ver repo</a>
+        </div>
+        <p class="project-desc">Sistema de gerenciamento de playlists e streaming desenvolvido como freelance. Painel administrativo com controle de usuários e conteúdo.</p>
+        <div class="project-tags">
+          <span class="tag">Python</span>
+          <span class="tag">API</span>
+          <span class="tag">Freelance</span>
+          <span class="tag">Dashboard</span>
+        </div>
+      </div>
+      <div class="project-card">
+        <div class="project-header">
+          <p class="project-name">BIBLIOTECA_FLOCA</p>
+          <a class="project-link" href="https://github.com/vinexfg/BIBLIOTECA_FLOCA" target="_blank">↗ ver repo</a>
+        </div>
+        <p class="project-desc">Sistema de gerenciamento de biblioteca desenvolvido em Python com cadastro, busca e controle de acervo.</p>
+        <div class="project-tags">
+          <span class="tag">Python</span>
+          <span class="tag">CRUD</span>
+          <span class="tag">Sistema</span>
+        </div>
+      </div>
+      <div class="project-card">
+        <div class="project-header">
+          <p class="project-name">CantinaGO</p>
+          <a class="project-link" href="https://github.com/Rodrygo88/cantina_go" target="_blank">↗ ver repo</a>
+        </div>
+        <p class="project-desc">Plataforma full stack de pedidos para cantina escolar. Clean Architecture com 175 testes unitários, CI/CD via GitHub Actions, notificações em tempo real com SSE e deploy automático no Render + Vercel.</p>
+        <div class="project-tags">
+          <span class="tag">Node.js</span>
+          <span class="tag">Express</span>
+          <span class="tag">PostgreSQL</span>
+          <span class="tag">React 19</span>
+          <span class="tag">Vite</span>
+          <span class="tag">JWT</span>
+          <span class="tag">Vitest</span>
+          <span class="tag">GitHub Actions</span>
+          <span class="tag">CI/CD</span>
+          <span class="tag">SSE</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <p class="sec-label">Especialidades</p>
+    <h2 class="sec-title">Habilidades técnicas</h2>
+    <div class="skills-grid">
+      <div class="skill-card">
+        <div class="skill-icon">🐍</div>
+        <p class="skill-name">Python</p>
+        <p class="skill-desc">Desenvolvimento back-end, automação, scripts e integração com APIs REST.</p>
+        <div class="skill-bar-wrap"><div class="skill-bar" data-width="85"></div></div>
+        <p class="skill-level">Intermediário-avançado · 85%</p>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">⚛️</div>
+        <p class="skill-name">React</p>
+        <p class="skill-desc">Criação de interfaces modernas com componentes reutilizáveis, hooks e estado global.</p>
+        <div class="skill-bar-wrap"><div class="skill-bar" data-width="70"></div></div>
+        <p class="skill-level">Intermediário · 70%</p>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">🟢</div>
+        <p class="skill-name">Node.js & Express</p>
+        <p class="skill-desc">Criação de APIs REST com autenticação JWT, middlewares de segurança e arquitetura em camadas.</p>
+        <div class="skill-bar-wrap"><div class="skill-bar" data-width="72"></div></div>
+        <p class="skill-level">Intermediário · 72%</p>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">🌐</div>
+        <p class="skill-name">HTML & CSS</p>
+        <p class="skill-desc">Estruturação e estilização de interfaces web responsivas, acessíveis e modernas.</p>
+        <div class="skill-bar-wrap"><div class="skill-bar" data-width="80"></div></div>
+        <p class="skill-level">Intermediário-avançado · 80%</p>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">⚡</div>
+        <p class="skill-name">JavaScript</p>
+        <p class="skill-desc">Lógica client-side, manipulação do DOM, eventos e integração com APIs externas.</p>
+        <div class="skill-bar-wrap"><div class="skill-bar" data-width="72"></div></div>
+        <p class="skill-level">Intermediário · 72%</p>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">🗄️</div>
+        <p class="skill-name">PostgreSQL</p>
+        <p class="skill-desc">Modelagem relacional, queries avançadas, joins e otimização de banco de dados.</p>
+        <div class="skill-bar-wrap"><div class="skill-bar" data-width="74"></div></div>
+        <p class="skill-level">Intermediário · 74%</p>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">🗄️</div>
+        <p class="skill-name">MySQL</p>
+        <p class="skill-desc">Banco de dados relacional com foco em modelagem, consultas e performance.</p>
+        <div class="skill-bar-wrap"><div class="skill-bar" data-width="78"></div></div>
+        <p class="skill-level">Intermediário · 78%</p>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">📊</div>
+        <p class="skill-name">Power BI</p>
+        <p class="skill-desc">Criação de dashboards interativos e visualização de dados para tomada de decisão.</p>
+        <div class="skill-bar-wrap"><div class="skill-bar" data-width="72"></div></div>
+        <p class="skill-level">Intermediário · 72%</p>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">🔧</div>
+        <p class="skill-name">Git & GitHub</p>
+        <p class="skill-desc">Versionamento de código, colaboração em equipe e gestão de repositórios.</p>
+        <div class="skill-bar-wrap"><div class="skill-bar" data-width="70"></div></div>
+        <p class="skill-level">Intermediário · 70%</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <p class="sec-label">Quem sou</p>
+    <h2 class="sec-title">Sobre mim</h2>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>Sou desenvolvedor Full Stack com experiência em Python, React, PostgreSQL, MySQL e Power BI. Construo aplicações completas — desde o banco de dados até a interface do usuário.</p>
+        <p>No front-end trabalho com HTML, CSS, JavaScript e React. No back-end uso Python e Node.js com foco em APIs REST e automação de dados. Também tenho experiência com análise de dados no Power BI.</p>
+      </div>
+      <div class="about-stats">
+        <div class="stat-box">
+          <span class="stat-num">688</span>
+          <p class="stat-lbl">Contribuições em 2026</p>
+        </div>
+        <div class="stat-box">
+          <span class="stat-num">30+</span>
+          <p class="stat-lbl">Repositórios</p>
+        </div>
+        <div class="stat-box">
+          <span class="stat-num">96%</span>
+          <p class="stat-lbl">Taxa de commits</p>
+        </div>
+        <div class="stat-box">
+          <span class="stat-num">8+</span>
+          <p class="stat-lbl">Tecnologias</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <p class="sec-label">Vamos conversar</p>
+    <h2 class="sec-title">Contato</h2>
+    <div class="contact-wrap">
+      <div class="contact-info">
+        <p>Estou aberto a novas oportunidades, freelas e colaborações. Me manda uma mensagem!</p>
+        <div class="contact-links">
+          <a class="contact-link" href="https://github.com/vinexfg" target="_blank">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+            github.com/vinexfg
+            <span>GitHub</span>
+          </a>
+          <a class="contact-link" href="mailto:vinysilvaa22v@gmail.com">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+            vinysilvaa22v@gmail.com
+            <span>Email</span>
+          </a>
+          <a class="contact-link" href="https://linkedin.com/in/vinexfg" target="_blank">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+            linkedin.com/in/vinexfg
+            <span>LinkedIn</span>
+          </a>
+        </div>
+      </div>
+      <form class="contact-form" onsubmit="handleForm(event)">
+        <input type="text" placeholder="Seu nome" required/>
+        <input type="email" placeholder="Seu e-mail" required/>
+        <textarea placeholder="Sua mensagem..."></textarea>
+        <button type="submit" class="btn btn-primary">Enviar mensagem</button>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <p>© 2026 · vinexfg · Feito com HTML, CSS & JS</p>
+</footer>
+
+<script>
+// Animate skill bars on scroll
+const bars = document.querySelectorAll('.skill-bar');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if(e.isIntersecting){
+      e.target.style.width = e.target.dataset.width + '%';
+    }
+  });
+}, {threshold: 0.3});
+bars.forEach(b => observer.observe(b));
+
+// Animate cards on scroll
+const cards = document.querySelectorAll('.skill-card, .project-card, .stat-box');
+const cardObs = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if(e.isIntersecting){
+      setTimeout(() => {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
+      }, 60 * i);
+    }
+  });
+}, {threshold: 0.1});
+cards.forEach(c => {
+  c.style.opacity = '0';
+  c.style.transform = 'translateY(12px)';
+  c.style.transition = 'opacity 0.4s ease, transform 0.4s ease, border-color 0.2s';
+  cardObs.observe(c);
+});
+
+function handleForm(e){
+  e.preventDefault();
+  const btn = e.target.querySelector('button');
+  btn.textContent = 'Mensagem enviada ✓';
+  btn.style.background = '#22c55e';
+  setTimeout(() => {
+    btn.textContent = 'Enviar mensagem';
+    btn.style.background = '';
+    e.target.reset();
+  }, 3000);
+}
+</script>
+</body>
+</html>

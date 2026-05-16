@@ -1,0 +1,2 @@
+# vinexfg.github.io
+curriculo

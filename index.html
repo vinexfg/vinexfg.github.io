@@ -18,11 +18,25 @@
   --mono:#2D5A8E;
   --tag-bg:#F0EDE8;
 }
+[data-theme="dark"]{
+  --bg:#0F0F0D;
+  --surface:#1A1916;
+  --border:#2A2826;
+  --text:#F0EDE8;
+  --muted:#8A8880;
+  --accent:#2ECC8A;
+  --accent-light:#0F2A1E;
+  --mono:#6BA3D6;
+  --tag-bg:#252320;
+}
 html{scroll-behavior:smooth}
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.6}
 
 /* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(247,246,243,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 2rem}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(247,246,243,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 2rem;transition:background 0.3s}
+[data-theme="dark"] nav{background:rgba(15,15,13,0.92)}
+.theme-btn{background:none;border:1px solid var(--border);border-radius:6px;padding:6px 10px;cursor:pointer;font-size:15px;color:var(--muted);transition:border-color 0.2s,color 0.2s;line-height:1}
+.theme-btn:hover{border-color:var(--accent);color:var(--accent)}
 .nav-inner{max-width:1000px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:56px}
 .nav-logo{font-family:'DM Mono',monospace;font-size:14px;color:var(--accent);text-decoration:none;letter-spacing:0.02em}
 .nav-links{display:flex;gap:2rem;list-style:none}
@@ -123,6 +137,7 @@ footer{padding:2rem;text-align:center;font-size:13px;color:var(--muted);font-fam
       <li><a href="#about">Sobre</a></li>
       <li><a href="#contact">Contato</a></li>
     </ul>
+    <button class="theme-btn" id="themeBtn" aria-label="Alternar modo escuro">🌙</button>
   </div>
 </nav>
 
@@ -133,7 +148,7 @@ footer{padding:2rem;text-align:center;font-size:13px;color:var(--muted);font-fam
     <div>
       <p class="hero-tag">Disponível para oportunidades</p>
       <h1 class="hero-name">Vinicius<br><strong>Silva Almeida</strong></h1>
-      <p class="hero-desc">Desenvolvedor Full Stack com foco em Python, React e dados. Construo aplicações completas — do banco de dados à interface — com código limpo e bem estruturado.</p>
+      <p class="hero-desc">Desenvolvedor Full Stack com foco em Python e React. Construo aplicações completas — do banco de dados à interface — com código limpo e bem estruturado.</p>
       <div class="hero-ctas">
         <a href="#contact" class="btn btn-primary">Entre em contato</a>
         <a href="#projects" class="btn btn-outline">Ver projetos</a>
@@ -277,7 +292,7 @@ footer{padding:2rem;text-align:center;font-size:13px;color:var(--muted);font-fam
     <div class="about-grid">
       <div class="about-text">
         <p>Sou desenvolvedor Full Stack com experiência em Python, React, PostgreSQL, MySQL e Power BI. Construo aplicações completas — desde o banco de dados até a interface do usuário.</p>
-        <p>No front-end trabalho com HTML, CSS, JavaScript e React. No back-end uso Python e Node.js com foco em APIs REST e automação de dados. Também tenho experiência com análise de dados no Power BI.</p>
+        <p>No front-end trabalho com HTML, CSS, JavaScript e React. No back-end uso Python e Node.js com foco em APIs REST e arquitetura de sistemas.</p>
       </div>
       <div class="about-stats">
         <div class="stat-box">
@@ -341,6 +356,20 @@ footer{padding:2rem;text-align:center;font-size:13px;color:var(--muted);font-fam
 </footer>
 
 <script>
+// Dark mode
+const themeBtn = document.getElementById('themeBtn');
+const root = document.documentElement;
+if(localStorage.getItem('theme') === 'dark'){
+  root.dataset.theme = 'dark';
+  themeBtn.textContent = '☀️';
+}
+themeBtn.addEventListener('click', () => {
+  const dark = root.dataset.theme === 'dark';
+  root.dataset.theme = dark ? '' : 'dark';
+  themeBtn.textContent = dark ? '🌙' : '☀️';
+  localStorage.setItem('theme', dark ? 'light' : 'dark');
+});
+
 // Animate skill bars on scroll
 const bars = document.querySelectorAll('.skill-bar');
 const observer = new IntersectionObserver((entries) => {
